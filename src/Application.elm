@@ -8,10 +8,12 @@ import Task
 import Time
 
 import Encounter
+import Pakedex
 
 
 type alias Model = {
-        console: List String
+        console: List String,
+        pakedex: Pakedex.Pakedex
     }
 
 type Message 
@@ -24,7 +26,7 @@ main : Program () Model Message
 main = Browser.element { init = init, view = view, update = update, subscriptions = subscriptions }
 
 init : () -> (Model, Cmd Message)
-init _ = (Model ["Welcome to Pakeman !"], Cmd.none)
+init _ = (Model ["Welcome to Pakeman !"] Pakedex.init, Cmd.none)
  
 update : Message -> Model -> (Model, Cmd Message)
 update msg model = 
@@ -58,7 +60,8 @@ view : Model -> Html Message
 view model =
     div [class "flex"] [
         div [class "w-25"] [
-            Html.h3 [] [text "Menu"]
+            Html.h3 [] [text "Pakedex"],
+            Pakedex.view model.pakedex
         ],
         div [class "w-50"] [
             Html.h3 [] [text "Main"]
