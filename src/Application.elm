@@ -1,4 +1,4 @@
-module Pakeman exposing (main)
+module Application exposing (main)
 
 import Browser
 import Html exposing (Html, div, text)
