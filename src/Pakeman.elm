@@ -3,6 +3,7 @@ module Pakeman exposing (main)
 import Browser
 import Html exposing (Html, div, text)
 import Html.Attributes exposing (class)
+import Random
 import Task
 import Time
 
@@ -13,6 +14,7 @@ type alias Model = {
 type Message 
     = AddConsole String
     | Timer Time.Posix
+    | TryEncounter String Bool
 
 main : Program () Model Message
 main = Browser.element { init = init, view = view, update = update, subscriptions = subscriptions }
@@ -26,11 +28,25 @@ update msg model =
         AddConsole entry ->
             ({ model | console = List.append [entry] model.console}, Cmd.none)
         Timer posix ->
-            (model, cmdAddConsole ("New message " ++ String.fromInt (Time.posixToMillis posix)))
+            (model, tryEncounter ("New message " ++ String.fromInt (Time.posixToMillis posix)))
+        TryEncounter entry hasEncounter ->
+            (model, 
+                if hasEncounter
+                then cmdAddConsole entry
+                else Cmd.none
+            )
 
 cmdAddConsole: String -> Cmd Message
 cmdAddConsole entry =
     Task.perform (\_ -> AddConsole entry)  (Task.succeed 1)
+
+tryEncounter: String -> Cmd Message
+tryEncounter entry =
+    Random.generate (TryEncounter entry) chanceEncounter
+
+chanceEncounter: Random.Generator Bool
+chanceEncounter = 
+    Random.weighted (10, True) [(90, False)]
 
 
 subscriptions : Model -> Sub Message
@@ -52,4 +68,3 @@ view model =
             div [] (List.map (\ elem -> div [] [text elem]) model.console)
         ]
     ]
-
