@@ -7,6 +7,9 @@ import Random
 import Task
 import Time
 
+import Encounter
+
+
 type alias Model = {
         console: List String
     }
@@ -14,7 +17,8 @@ type alias Model = {
 type Message 
     = AddConsole String
     | Timer Time.Posix
-    | TryEncounter String Bool
+    | TryEncounter Bool
+    | MakeEncounter Encounter.Encounter
 
 main : Program () Model Message
 main = Browser.element { init = init, view = view, update = update, subscriptions = subscriptions }
@@ -25,29 +29,25 @@ init _ = (Model ["Welcome to Pakeman !"], Cmd.none)
 update : Message -> Model -> (Model, Cmd Message)
 update msg model = 
     case msg of 
-        AddConsole entry ->
+        AddConsole entry -> 
             ({ model | console = List.append [entry] model.console}, Cmd.none)
-        Timer posix ->
-            (model, tryEncounter ("New message " ++ String.fromInt (Time.posixToMillis posix)))
-        TryEncounter entry hasEncounter ->
+        Timer _ -> 
+            (model, Random.generate TryEncounter Encounter.genTryEncounter)
+        TryEncounter possible ->
             (model, 
-                if hasEncounter
-                then cmdAddConsole entry
+                if possible
+                then Random.generate MakeEncounter Encounter.genEncounter
                 else Cmd.none
             )
+        MakeEncounter encounter -> 
+            (model, cmdAddConsole (Encounter.toString encounter))
+
 
 cmdAddConsole: String -> Cmd Message
 cmdAddConsole entry =
     Task.perform (\_ -> AddConsole entry)  (Task.succeed 1)
 
-tryEncounter: String -> Cmd Message
-tryEncounter entry =
-    Random.generate (TryEncounter entry) chanceEncounter
-
-chanceEncounter: Random.Generator Bool
-chanceEncounter = 
-    Random.weighted (10, True) [(90, False)]
-
+    
 
 subscriptions : Model -> Sub Message
 subscriptions _ = 
