@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Pakeman</title>
+    <style>body { padding: 0; margin: 0; }</style>
+    <link rel="stylesheet" href="https://unpkg.com/tachyons@4/css/tachyons.min.css">
+  </head>
+
+  <body class="tc f4 avenir bg-moon-gray">
+    <header class="bg-dark-green light-gray pv4">Pakeman</header>
+    
+    <pre id="pakeman"></pre>
+
+    <script type="text/javascript" src="./Pakeman.js"></script>
+    <script type="text/javascript">
+      var app = Elm.Pakeman.init({ node: document.getElementById("pakeman") });
+    </script>
+  </body>
+</html>
