@@ -1,24 +1,35 @@
-module Encounter exposing (Encounter, genEncounter, genTryEncounter, toString)
+module Encounter exposing (Encounter, genEncounter, genTryEncounter)
 
 import Random 
+import Time
 
-import Rarity
+import Zone
 
 
 type alias Encounter = {
-        rarity: Rarity.Rarity,
-        value: Int    
+        pakemanId: Int,
+        time: Time.Posix  
     } 
 
-genEncounter: Random.Generator Encounter
-genEncounter = 
-    Random.map2 Encounter Rarity.genRarity genValue
-
-genValue: Random.Generator Int
-genValue = Random.int 0 Random.maxInt
 
 genTryEncounter: Random.Generator Bool
 genTryEncounter = Random.weighted (10, True) [(90, False)]
 
-toString: Encounter -> String
-toString encounter = Rarity.toString encounter.rarity ++ String.fromInt encounter.value
+
+genEncounter: Time.Posix -> Zone.Zone -> Random.Generator Encounter
+genEncounter time zone = 
+    Random.map2 Encounter 
+        (genPakemanId (Zone.getPropabilities zone)) 
+        (Random.constant time)
+
+genPakemanId: List (Float, Int) -> Random.Generator Int
+genPakemanId list = Random.weighted 
+    (
+        case List.head list of  
+            Just r -> r
+            Nothing -> (0, 0)
+    ) (
+        case List.tail list of
+            Just l -> l
+            Nothing -> []
+    )

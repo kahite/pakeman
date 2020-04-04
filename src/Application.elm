@@ -21,7 +21,7 @@ type alias Model = {
 type Message 
     = AddConsole String
     | Timer Time.Posix
-    | TryEncounter Bool
+    | TryEncounter Time.Posix Bool 
     | MakeEncounter Encounter.Encounter
 
 main : Program () Model Message
@@ -35,16 +35,25 @@ update msg model =
     case msg of 
         AddConsole entry -> 
             ({ model | console = List.append [entry] model.console}, Cmd.none)
-        Timer _ -> 
-            (model, Random.generate TryEncounter Encounter.genTryEncounter)
-        TryEncounter possible ->
+        Timer time -> 
+            (model, 
+                if World.canAddVisiblePakeman model.world
+                then Random.generate (TryEncounter time) Encounter.genTryEncounter
+                else Cmd.none
+            )
+        TryEncounter time possible  ->
             (model, 
                 if possible
-                then Random.generate MakeEncounter Encounter.genEncounter
+                then Random.generate MakeEncounter (Encounter.genEncounter time model.world.currentZone)
                 else Cmd.none
             )
         MakeEncounter encounter -> 
-            (model, cmdAddConsole (Encounter.toString encounter))
+            let pakeman = Pakedex.getPakeman model.pakedex encounter.pakemanId
+            in 
+            ({model | 
+                world = World.addVisiblePakeman pakeman model.world,
+                pakedex = Pakedex.addSeenPakeman model.pakedex encounter.pakemanId
+            }, cmdAddConsole pakeman.name)
 
 
 cmdAddConsole: String -> Cmd Message
@@ -62,14 +71,14 @@ view : Model -> Html Message
 view model =
     div [class "flex"] [
         div [class "w-25"] [
-            Html.h3 [] [text "Pakedex"],
+            Html.h3 [] [text "Pakedex listing"],
             Pakedex.view model.pakedex
         ],
         div [class "w-50"] [
             World.view model.world model.pakedex
         ],
         div [class "w-25"] [
-            Html.h3 [] [text "Console"],
+            Html.h3 [] [text "Pakedex messenger"],
             div [] (List.map (\ elem -> div [] [text elem]) model.console)
         ]
     ]

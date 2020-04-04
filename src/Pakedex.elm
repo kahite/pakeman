@@ -1,4 +1,4 @@
-module Pakedex exposing (Pakedex, init, view, getPakeman, hasSeenPakeman, hasCapturedPakeman)
+module Pakedex exposing (Pakedex, addSeenPakeman, init, view, getPakeman, hasSeenPakeman, hasCapturedPakeman)
 
 import Dict
 import Html exposing (Html, div, text)
@@ -41,6 +41,11 @@ getPakeman pakedex id =
 
 hasSeenPakeman: Pakedex -> Int -> Bool
 hasSeenPakeman pakedex id = Set.member id pakedex.seen
+
+addSeenPakeman: Pakedex -> Int -> Pakedex
+addSeenPakeman pakedex id = {pakedex |
+        seen = Set.insert id pakedex.seen
+    }
 
 hasCapturedPakeman: Pakedex -> Int -> Bool
 hasCapturedPakeman pakedex id = Set.member id pakedex.captured

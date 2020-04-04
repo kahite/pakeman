@@ -1,20 +1,20 @@
-module Zone exposing (Zone, Zones(..), init, getSpecies)
-
-import Rarity
+module Zone exposing (Zone, Zones(..), getPropabilities, init, getSpecies)
 
 
 type alias Zone = {
         name: String,
         accessibleZones: Zones,
-        rarityProbability: List (Int, Rarity.Rarity),
-        speciesPresence: List (Int, Rarity.Rarity)
+        speciesPresence: List (Float, Int)
     }
 
 type Zones = Zones (List Zone)
 
 
 init: Zone
-init = Zone "" (Zones []) [] []
+init = Zone "" (Zones []) []
 
 getSpecies: Zone -> List Int
-getSpecies zone = List.map (\ (species, _) -> species) zone.speciesPresence
+getSpecies zone = List.map (\ (_, species) -> species) zone.speciesPresence
+
+getPropabilities: Zone -> List (Float, Int)
+getPropabilities zone = zone.speciesPresence
