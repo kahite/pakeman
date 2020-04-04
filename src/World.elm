@@ -25,11 +25,18 @@ view world pakedex =
     div [] [
         Html.h4 [] [text world.currentZone.name],
         Html.h5 [] [text "Pakeman in sight"],
-        div [] (List.map (\ pakeman -> Pakeman.displayCard pakeman) world.visiblePakemans),
+        div [] (List.map (\ pakeman -> 
+            Pakeman.displayCard pakeman True (Pakedex.hasCapturedPakeman pakedex pakeman.id)
+        ) world.visiblePakemans),
         Html.h5 [] [text "Pakeman species in zone"],
-        div [class "flex"] (
+        div [class "flex flex-wrap"] (
             List.map (\ species -> 
-                div [] [Pakeman.displayCard (Pakedex.getPakeman pakedex species)]
+                div [class "w-25"] [
+                    Pakeman.displayCard 
+                        (Pakedex.getPakeman pakedex species) 
+                        (Pakedex.hasSeenPakeman pakedex species)
+                        (Pakedex.hasCapturedPakeman pakedex species)
+                    ] 
             ) (Zone.getSpecies world.currentZone)
         )
     ]

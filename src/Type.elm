@@ -37,5 +37,5 @@ getBgColor t =
         Rock -> "bg-mid-gray"
         Ghost -> "bg-purple"
         Dragon -> "bg-washed-green"
-        Nothing -> ""
+        Nothing -> "bg-mid-gray"
     

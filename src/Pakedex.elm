@@ -1,4 +1,4 @@
-module Pakedex exposing (Pakedex, init, view, getPakeman)
+module Pakedex exposing (Pakedex, init, view, getPakeman, hasSeenPakeman, hasCapturedPakeman)
 
 import Dict
 import Html exposing (Html, div, text)
@@ -17,7 +17,7 @@ import Species.P9_Tartonk
 
 type alias Pakedex = {
         list: Dict.Dict Int Pakeman.Pakeman,
-        viewed: Set Int,
+        seen: Set Int,
         captured: Set Int
     }
 
@@ -26,11 +26,24 @@ view: Pakedex -> Html msg
 view pakedex = 
     div [] (List.map (\ (id, pakeman) -> 
         div [] [
-            if Set.member id pakedex.viewed
+            if hasSeenPakeman pakedex id
             then text pakeman.name
             else text "-----"
         ]
     ) (Dict.toList pakedex.list))
+
+
+getPakeman: Pakedex -> Int -> Pakeman.Pakeman
+getPakeman pakedex id = 
+    case Dict.get id pakedex.list of
+        Just p -> p
+        Nothing -> Pakeman.init
+
+hasSeenPakeman: Pakedex -> Int -> Bool
+hasSeenPakeman pakedex id = Set.member id pakedex.seen
+
+hasCapturedPakeman: Pakedex -> Int -> Bool
+hasCapturedPakeman pakedex id = Set.member id pakedex.captured
 
 
 init: Pakedex
@@ -47,10 +60,4 @@ init = Pakedex
         (9, Species.P9_Tartonk.create)
     ])
     (Set.insert 4 (Set.insert 9 Set.empty))
-    Set.empty
-
-getPakeman: Pakedex -> Int -> Pakeman.Pakeman
-getPakeman pakedex id = 
-    case Dict.get id pakedex.list of
-        Just p -> p
-        Nothing -> Pakeman.init
+    (Set.insert 9 Set.empty)
