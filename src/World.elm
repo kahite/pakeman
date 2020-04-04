@@ -24,16 +24,20 @@ type alias World = {
 
 type Message 
     = ChangeZone Int
+    | TalkTo People.People
 
 
 update: Message -> World -> World
 update msg world = 
     case msg of 
-        ChangeZone zoneId -> {world |  
+        ChangeZone zoneId -> 
+            {world |  
                 currentZone = case Dict.get zoneId world.zones of
                     Just z -> z
                     Nothing -> world.currentZone 
             }
+        TalkTo _ -> 
+            world
 
 
 view: World -> Pakedex -> Html Message
@@ -81,14 +85,14 @@ displayPakemanInZone world pakedex =
     ]
     else []
 
-displayPeopleInZone: World -> List (Html msg)
+displayPeopleInZone: World -> List (Html Message)
 displayPeopleInZone world = 
     if Zone.hasPeople world.currentZone
     then [            
-        Html.h5 [class "tl"] [text "People"],
+        Html.h5 [class "tl"] [text "Talk to"],
         div [class "flex flex-wrap"] (
             List.map (\ people -> 
-                div [class "w-25"] [People.display people] 
+                div [class "w-25"] [People.display people (TalkTo people)] 
             ) (Zone.getPeople world.currentZone)
         )
     ]

@@ -4,38 +4,41 @@ import Browser
 import Html exposing (Html, div, text)
 import Html.Attributes exposing (class)
 import Random
-import Task
 import Time
 
 import Encounter
 import Pakedex
+import PakeMessenger as Messenger
+import People.Model as People
 import World
 
 
 type alias Model = {
-        console: List String,
         pakedex: Pakedex.Pakedex,
-        world: World.World
+        world: World.World,
+        messenger: Messenger.Messenger
     }
 
 type Message 
-    = AddConsole String
-    | Timer Time.Posix
+    = Timer Time.Posix
     | TryEncounter Time.Posix Bool 
     | MakeEncounter Encounter.Encounter
     | WorldMessage World.Message
+    | MessengerMessage Messenger.Message
 
 main : Program () Model Message
 main = Browser.element { init = init, view = view, update = update, subscriptions = subscriptions }
 
 init : () -> (Model, Cmd Message)
-init _ = (Model ["Welcome to Pakeman !"] Pakedex.init World.init, Cmd.none)
+init _ = (
+        Model Pakedex.init World.init Messenger.init, 
+        Cmd.map (\ cmdMessage -> MessengerMessage cmdMessage) 
+            (Messenger.cmdAddComment (Messenger.Comment People.narrator "Welcome to Pakeman !"))
+    )
  
 update : Message -> Model -> (Model, Cmd Message)
 update msg model = 
     case msg of 
-        AddConsole entry -> 
-            ({ model | console = List.append [entry] model.console}, Cmd.none)
         Timer time -> 
             ({ model |
                 world = World.freeEncounter model.world time
@@ -58,17 +61,22 @@ update msg model =
                 pakedex = Pakedex.addSeenPakeman model.pakedex encounter.pakemanId
             }, 
             if not (Pakedex.hasSeenPakeman model.pakedex encounter.pakemanId)
-            then cmdAddConsole ("Wow ! A " ++ pakeman.name ++ ", wild !")
+            then Cmd.map (\ cmdMessage -> MessengerMessage cmdMessage) 
+                (Messenger.cmdAddComment (Messenger.Comment People.narrator ("Wow ! A " ++ pakeman.name ++ ", wild !")))
             else Cmd.none)
         WorldMessage worldMessage ->
-            ({model | world = World.update worldMessage model.world}, Cmd.none)
+            case worldMessage of
+                World.TalkTo people ->
+                    (model, 
+                        Cmd.map (\ cmdMessage -> MessengerMessage cmdMessage) 
+                            (Messenger.cmdAddComment (Messenger.Comment people people.welcomeText))
+                    )
+                _ ->
+                    ({model | world = World.update worldMessage model.world}, Cmd.none)
+        MessengerMessage messengerMessage -> 
+            ({model | messenger = Messenger.update messengerMessage model.messenger}, Cmd.none)
 
 
-cmdAddConsole: String -> Cmd Message
-cmdAddConsole entry =
-    Task.perform (\_ -> AddConsole entry)  (Task.succeed 1)
-
-    
 
 subscriptions : Model -> Sub Message
 subscriptions _ = 
@@ -78,15 +86,14 @@ subscriptions _ =
 view : Model -> Html Message
 view model =
     div [class "flex"] [
-        div [class "w-25"] [
+        div [class "w-25 pa3"] [
             Html.h3 [] [text "Pakedex listing"],
             Pakedex.view model.pakedex
         ],
-        div [class "w-50"] [
+        div [class "w-50 pa3"] [
             Html.map (\ msg -> WorldMessage msg) (World.view model.world model.pakedex)
         ],
-        div [class "w-25"] [
-            Html.h3 [] [text "Pakedex messenger"],
-            div [] (List.map (\ elem -> div [] [text elem]) model.console)
+        div [class "w-25 pa3"] [
+            Html.map (\ msg -> MessengerMessage msg) (Messenger.view model.messenger)
         ]
     ]
