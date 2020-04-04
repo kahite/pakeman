@@ -2,7 +2,8 @@ module Zones.Z1_BourgPoulette exposing (create)
 
 import Zones.Model exposing (Zone, Biotope(..))
 
-import People.ProfChon
+import People.P1_Mum
+import People.P2_ProfChichon
 
 create: Zone
 create = Zone
@@ -10,5 +11,8 @@ create = Zone
     "Bourg Poulette"
     City
     [2]
-    [People.ProfChon.create]
+    [
+        People.P1_Mum.create,
+        People.P2_ProfChichon.create
+    ]
     []

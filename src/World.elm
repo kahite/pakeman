@@ -34,7 +34,8 @@ update msg world =
             {world |  
                 currentZone = case Dict.get zoneId world.zones of
                     Just z -> z
-                    Nothing -> world.currentZone 
+                    Nothing -> world.currentZone,
+                encounters = []
             }
         TalkTo _ -> 
             world

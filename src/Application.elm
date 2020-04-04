@@ -86,14 +86,13 @@ subscriptions _ =
 view : Model -> Html Message
 view model =
     div [class "flex"] [
-        div [class "w-25 pa3"] [
-            Html.h3 [] [text "Pakedex listing"],
+        div [class "w-20 pa3"] [
             Pakedex.view model.pakedex
         ],
         div [class "w-50 pa3"] [
             Html.map (\ msg -> WorldMessage msg) (World.view model.world model.pakedex)
         ],
-        div [class "w-25 pa3"] [
+        div [class "w-30 pa3"] [
             Html.map (\ msg -> MessengerMessage msg) (Messenger.view model.messenger)
         ]
     ]

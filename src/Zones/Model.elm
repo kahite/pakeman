@@ -55,7 +55,7 @@ getBgColor: Zone -> String
 getBgColor zone =
     case zone.biotope of
         Nothing -> ""
-        City -> "bg-moon-gray"
+        City -> "bg-light-silver"
         Plain -> "bg-green"
         Forest -> "bg-dark-green"
         Moutain -> "bg-light-blue"

@@ -42,7 +42,7 @@ cmdAddComment comment =
 view: Messenger -> Html Message
 view messenger = 
     div [] [
-        Html.h3 [] [text "Pakedex messenger"],
+        Html.h3 [] [text "PakeMessenger"],
         div [class "tj"] (List.map (\ comment -> 
             let people = getPeople messenger comment.people.id
             in
