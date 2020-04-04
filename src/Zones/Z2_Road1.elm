@@ -1,13 +1,15 @@
-module Zones.Road1 exposing (create)
+module Zones.Z2_Road1 exposing (create)
 
-import Zones.Model exposing (Zone, Identity(..))
+import Zones.Model exposing (Zone, Biotope(..))
  
 
 create: Zone
 create = Zone
+    2
     "Road 1"
-    Road1
-    [BourgPoulette]
+    Plain
+    [1]
+    []
     [
         (25, 1), 
         (25, 4), 

@@ -1,24 +1,27 @@
-module Zones.Model exposing (Zone, Identity(..), getPeople, hasPeople, hasPakeman, getPropabilities, init, getPakemans)
+module Zones.Model exposing (Zone, Biotope(..), display, isZoneAccessible, getPeople, hasPeople, hasPakeman, getPropabilities, getPakemans)
+
+import Html exposing (Html, div, text)
+import Html.Attributes exposing (class)
 
 import People.Model exposing (People)
 
 
 type alias Zone = {
+        id: Int,
         name: String,
-        identity: Identity,
-        accessibleZones: List Identity,
+        biotope: Biotope,
+        accessibleZones: List Int,
         people: List People,
         pakemanPresence: List (Float, Int)
     }
 
-type Identity 
+type Biotope 
     = Nothing
-    | BourgPoulette
-    | Road1
-
-
-init: Zone
-init = Zone "" Nothing [] [] []
+    | City
+    | Plain
+    | Forest
+    | Moutain
+    | Cavern
 
 getPropabilities: Zone -> List (Float, Int)
 getPropabilities zone = zone.pakemanPresence
@@ -34,3 +37,22 @@ getPeople zone = zone.people
 
 hasPeople: Zone -> Bool
 hasPeople zone = not (List.isEmpty zone.people)
+
+isZoneAccessible: Zone -> Int -> Bool
+isZoneAccessible zone id = List.member id zone.accessibleZones
+
+display: Zone -> Html msg
+display zone = 
+    div [class ("relative ba bw1 ma1 pa3 " ++ getBgColor zone)] [
+        div [] [text zone.name]
+    ]
+
+getBgColor: Zone -> String
+getBgColor zone =
+    case zone.biotope of
+        Nothing -> ""
+        City -> "bg-moon-gray"
+        Plain -> "bg-green"
+        Forest -> "bg-dark-green"
+        Moutain -> "bg-light-blue"
+        Cavern -> "bg-dark-gray"

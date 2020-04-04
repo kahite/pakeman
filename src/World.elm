@@ -1,5 +1,6 @@
 module World exposing (World, freeEncounter, canEncounter, addEncounter, init, view)
 
+import Dict
 import Html exposing (Html, div, text)
 import Html.Attributes exposing (class)
 import Time
@@ -8,19 +9,17 @@ import Encounter
 import Pakeman
 import Pakedex exposing (Pakedex)
 import People.Model as People
-import Zones.Model exposing (Zone, getPakemans, hasPakeman, getPeople, hasPeople)
+import Zones.Model as Zone
 
-import Zones.BourgPoulette 
+import Zones.Z1_BourgPoulette 
+import Zones.Z2_Road1 
 
 
 type alias World = {
-        currentZone: Zone,
+        currentZone: Zone.Zone,
+        zones: Dict.Dict Int Zone.Zone,
         encounters: List Encounter.Encounter
     }
-
-
-init: World
-init = World Zones.BourgPoulette.create []
 
 
 view: World -> Pakedex -> Html msg
@@ -29,14 +28,15 @@ view world pakedex =
         [Html.h4 [] [text world.currentZone.name]],
         displayPakemanInSight world pakedex,
         displayPakemanInZone world pakedex,
-        displayPeopleInZone world
+        displayPeopleInZone world,
+        displayAvailableZones world
     ])
 
 displayPakemanInSight: World -> Pakedex -> List (Html msg)
 displayPakemanInSight world pakedex = 
-    if hasPakeman world.currentZone
+    if Zone.hasPakeman world.currentZone
     then [
-        Html.h5 [] [text "Pakeman in sight"],
+        Html.h5 [class "tl"] [text "Pakeman in sight"],
         div [class "flex flex-wrap"] (
             List.map (\ encounter -> 
                 div [class "w-25"] [
@@ -51,9 +51,9 @@ displayPakemanInSight world pakedex =
 
 displayPakemanInZone: World -> Pakedex -> List (Html msg)
 displayPakemanInZone world pakedex = 
-    if hasPakeman world.currentZone
+    if Zone.hasPakeman world.currentZone
     then [            
-        Html.h5 [] [text "Pakeman species in zone"],
+        Html.h5 [class "tl"] [text "Pakeman species in zone"],
         div [class "flex flex-wrap"] (
             List.map (\ pakemanId -> 
                 div [class "w-25"] [
@@ -62,24 +62,39 @@ displayPakemanInZone world pakedex =
                         (Pakedex.hasSeenPakeman pakedex pakemanId)
                         (Pakedex.hasCapturedPakeman pakedex pakemanId)
                 ] 
-            ) (getPakemans world.currentZone)
+            ) (Zone.getPakemans world.currentZone)
         )
     ]
     else []
 
 displayPeopleInZone: World -> List (Html msg)
 displayPeopleInZone world = 
-    if hasPeople world.currentZone
+    if Zone.hasPeople world.currentZone
     then [            
-        Html.h5 [] [text "People"],
+        Html.h5 [class "tl"] [text "People"],
         div [class "flex flex-wrap"] (
             List.map (\ people -> 
                 div [class "w-25"] [People.display people] 
-            ) (getPeople world.currentZone)
+            ) (Zone.getPeople world.currentZone)
         )
     ]
     else []
 
+displayAvailableZones: World -> List (Html msg)
+displayAvailableZones world = 
+    [            
+        Html.h5 [class "tl"] [text "Zones you can go to"],
+        div [class "flex flex-wrap"] (
+            List.map (\ zone -> 
+                div [class "w-25"] [Zone.display zone] 
+            ) (
+                let filterAccessible = \ id _ -> Zone.isZoneAccessible world.currentZone id
+                in
+                    List.map (\ (_, z) -> z)
+                    (Dict.toList (Dict.filter filterAccessible world.zones))
+            )
+        )
+    ]
 
 addEncounter: Encounter.Encounter -> World -> World
 addEncounter encounter world = { world | 
@@ -89,7 +104,7 @@ addEncounter encounter world = { world |
 canEncounter: World -> Bool
 canEncounter world 
     = List.length world.encounters < 8
-    && hasPakeman world.currentZone
+    && Zone.hasPakeman world.currentZone
 
 freeEncounter: World -> Time.Posix -> World
 freeEncounter world time = { world | 
@@ -97,3 +112,15 @@ freeEncounter world time = { world |
             Time.posixToMillis time < Time.posixToMillis encounter.time + encounter.duration * 1000
         ) world.encounters       
     }
+
+
+
+init: World
+init = let currentZone = Zones.Z1_BourgPoulette.create
+    in World 
+        currentZone 
+        (Dict.fromList [
+            (1, currentZone),
+            (2, Zones.Z2_Road1.create)
+        ])
+        []
