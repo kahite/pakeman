@@ -23,6 +23,7 @@ type Message
     | Timer Time.Posix
     | TryEncounter Time.Posix Bool 
     | MakeEncounter Encounter.Encounter
+    | WorldMessage World.Message
 
 main : Program () Model Message
 main = Browser.element { init = init, view = view, update = update, subscriptions = subscriptions }
@@ -59,6 +60,8 @@ update msg model =
             if not (Pakedex.hasSeenPakeman model.pakedex encounter.pakemanId)
             then cmdAddConsole ("Wow ! A " ++ pakeman.name ++ ", wild !")
             else Cmd.none)
+        WorldMessage worldMessage ->
+            ({model | world = World.update worldMessage model.world}, Cmd.none)
 
 
 cmdAddConsole: String -> Cmd Message
@@ -80,7 +83,7 @@ view model =
             Pakedex.view model.pakedex
         ],
         div [class "w-50"] [
-            World.view model.world model.pakedex
+            Html.map (\ msg -> WorldMessage msg) (World.view model.world model.pakedex)
         ],
         div [class "w-25"] [
             Html.h3 [] [text "Pakedex messenger"],

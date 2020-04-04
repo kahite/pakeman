@@ -1,11 +1,11 @@
-module World exposing (World, freeEncounter, canEncounter, addEncounter, init, view)
+module World exposing (World, Message(..), update, freeEncounter, canEncounter, addEncounter, init, view)
 
 import Dict
 import Html exposing (Html, div, text)
 import Html.Attributes exposing (class)
 import Time
 
-import Encounter 
+import Encounter  
 import Pakeman
 import Pakedex exposing (Pakedex)
 import People.Model as People
@@ -22,7 +22,21 @@ type alias World = {
     }
 
 
-view: World -> Pakedex -> Html msg
+type Message 
+    = ChangeZone Int
+
+
+update: Message -> World -> World
+update msg world = 
+    case msg of 
+        ChangeZone zoneId -> {world |  
+                currentZone = case Dict.get zoneId world.zones of
+                    Just z -> z
+                    Nothing -> world.currentZone 
+            }
+
+
+view: World -> Pakedex -> Html Message
 view world pakedex = 
     div [] (List.concat [
         [Html.h4 [] [text world.currentZone.name]],
@@ -80,13 +94,13 @@ displayPeopleInZone world =
     ]
     else []
 
-displayAvailableZones: World -> List (Html msg)
+displayAvailableZones: World -> List (Html Message)
 displayAvailableZones world = 
     [            
-        Html.h5 [class "tl"] [text "Zones you can go to"],
+        Html.h5 [class "tl"] [text "Travel to"],
         div [class "flex flex-wrap"] (
             List.map (\ zone -> 
-                div [class "w-25"] [Zone.display zone] 
+                div [class "w-25"] [Zone.display zone (ChangeZone zone.id)] 
             ) (
                 let filterAccessible = \ id _ -> Zone.isZoneAccessible world.currentZone id
                 in

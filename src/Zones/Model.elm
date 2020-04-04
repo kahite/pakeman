@@ -2,6 +2,7 @@ module Zones.Model exposing (Zone, Biotope(..), display, isZoneAccessible, getPe
 
 import Html exposing (Html, div, text)
 import Html.Attributes exposing (class)
+import Html.Events exposing (onClick)
 
 import People.Model exposing (People)
 
@@ -41,10 +42,13 @@ hasPeople zone = not (List.isEmpty zone.people)
 isZoneAccessible: Zone -> Int -> Bool
 isZoneAccessible zone id = List.member id zone.accessibleZones
 
-display: Zone -> Html msg
-display zone = 
-    div [class ("relative ba bw1 ma1 pa3 " ++ getBgColor zone)] [
-        div [] [text zone.name]
+display: Zone -> msg -> Html msg
+display zone msg = 
+    div [
+        class ("relative ba bw1 ma1 pa3 pointer " ++ getBgColor zone),
+        onClick msg
+    ] [
+        div [onClick msg] [text zone.name]
     ]
 
 getBgColor: Zone -> String
