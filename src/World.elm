@@ -7,7 +7,8 @@ import Time
 import Encounter 
 import Pakeman
 import Pakedex exposing (Pakedex)
-import Zones.Model exposing (Zone, getPakemans, hasPakeman)
+import People.Model as People
+import Zones.Model exposing (Zone, getPakemans, hasPakeman, getPeople, hasPeople)
 
 import Zones.BourgPoulette 
 
@@ -27,7 +28,8 @@ view world pakedex =
     div [] (List.concat [
         [Html.h4 [] [text world.currentZone.name]],
         displayPakemanInSight world pakedex,
-        displayPakemanInZone world pakedex
+        displayPakemanInZone world pakedex,
+        displayPeopleInZone world
     ])
 
 displayPakemanInSight: World -> Pakedex -> List (Html msg)
@@ -61,6 +63,19 @@ displayPakemanInZone world pakedex =
                         (Pakedex.hasCapturedPakeman pakedex pakemanId)
                 ] 
             ) (getPakemans world.currentZone)
+        )
+    ]
+    else []
+
+displayPeopleInZone: World -> List (Html msg)
+displayPeopleInZone world = 
+    if hasPeople world.currentZone
+    then [            
+        Html.h5 [] [text "People"],
+        div [class "flex flex-wrap"] (
+            List.map (\ people -> 
+                div [class "w-25"] [People.display people] 
+            ) (getPeople world.currentZone)
         )
     ]
     else []
