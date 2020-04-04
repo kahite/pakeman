@@ -4,15 +4,15 @@ import Html exposing (Html, div, text)
 import Set exposing (Set)
 
 import Pakeman
-import Pakemans.P1_Bilbuzorre
-import Pakemans.P2_Herbuzorre
-import Pakemans.P3_Flaruzorre
-import Pakemans.P4_Solomeche
-import Pakemans.P5_Reptuncel
-import Pakemans.P6_Drocoifei
-import Pakemans.P7_Coropice
-import Pakemans.P8_Coroboffe
-import Pakemans.P9_Tartonk
+import Species.P1_Bilbuzorre
+import Species.P2_Herbuzorre
+import Species.P3_Flaruzorre
+import Species.P4_Solomeche
+import Species.P5_Reptuncel
+import Species.P6_Drocoifei
+import Species.P7_Coropice
+import Species.P8_Coroboffe
+import Species.P9_Tartonk
 
 type alias Pakedex = {
         list: List Pakeman.Pakeman,
@@ -35,15 +35,15 @@ view pakedex =
 init: Pakedex
 init = Pakedex 
     [
-        Pakemans.P1_Bilbuzorre.create,
-        Pakemans.P2_Herbuzorre.create,
-        Pakemans.P3_Flaruzorre.create,
-        Pakemans.P4_Solomeche.create,
-        Pakemans.P5_Reptuncel.create,
-        Pakemans.P6_Drocoifei.create,
-        Pakemans.P7_Coropice.create,
-        Pakemans.P8_Coroboffe.create,
-        Pakemans.P9_Tartonk.create
+        Species.P1_Bilbuzorre.create,
+        Species.P2_Herbuzorre.create,
+        Species.P3_Flaruzorre.create,
+        Species.P4_Solomeche.create,
+        Species.P5_Reptuncel.create,
+        Species.P6_Drocoifei.create,
+        Species.P7_Coropice.create,
+        Species.P8_Coroboffe.create,
+        Species.P9_Tartonk.create
     ] 
     (Set.insert 4 (Set.insert 9 Set.empty))
     Set.empty

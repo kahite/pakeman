@@ -1,12 +1,14 @@
-module Pakemans.P3_Flaruzorre exposing (create)
+module Species.P2_Herbuzorre exposing (create)
 
 import Pakeman
+import Species
 import Type
 
 
 create: Pakeman.Pakeman
 create = Pakeman.Pakeman 
-    3
-    "Flaruzorre"
+    2
+    Species.Herbuzorre
+    "Herbuzorre"
     Type.Grass
     Type.Poison

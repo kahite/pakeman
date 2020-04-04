@@ -8,6 +8,7 @@ type Rarity
     | Common
     | Rare
     | VeryRare
+    | Legendary
 
 toString: Rarity -> String
 toString rarity = case rarity of
@@ -15,6 +16,7 @@ toString rarity = case rarity of
     Common -> "Common"
     Rare -> "Rare"
     VeryRare -> "Very rare"
+    Legendary -> "Legendary"
 
 
 genRarity: Random.Generator Rarity

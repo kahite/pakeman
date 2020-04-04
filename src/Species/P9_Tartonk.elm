@@ -1,12 +1,14 @@
-module Pakemans.P8_Coroboffe exposing (create)
+module Species.P9_Tartonk exposing (create)
 
 import Pakeman
+import Species
 import Type
 
 
 create: Pakeman.Pakeman
 create = Pakeman.Pakeman 
-    8
-    "Coroboffe"
+    9
+    Species.Tartonk
+    "Tartonk"
     Type.Water
     Type.Nothing
