@@ -25,7 +25,7 @@ displayCard pakeman visible captured =
     div [class ("relative ba bw1 ma1 pa3 " ++ color)] [
         div [] [text name],
         div [class "absolute top-0 left-0"] [
-            if captured
+            if captured && visible
             then SvgHelper.capturedIcon "black"
             else text ""
         ]

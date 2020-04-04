@@ -36,8 +36,10 @@ update msg model =
         AddConsole entry -> 
             ({ model | console = List.append [entry] model.console}, Cmd.none)
         Timer time -> 
-            (model, 
-                if World.canAddVisiblePakeman model.world
+            ({ model |
+                world = World.freeEncounter model.world time
+            }, 
+                if World.canEncounter model.world
                 then Random.generate (TryEncounter time) Encounter.genTryEncounter
                 else Cmd.none
             )
@@ -51,9 +53,12 @@ update msg model =
             let pakeman = Pakedex.getPakeman model.pakedex encounter.pakemanId
             in 
             ({model | 
-                world = World.addVisiblePakeman pakeman model.world,
+                world = World.addEncounter encounter model.world,
                 pakedex = Pakedex.addSeenPakeman model.pakedex encounter.pakemanId
-            }, cmdAddConsole pakeman.name)
+            }, 
+            if not (Pakedex.hasSeenPakeman model.pakedex encounter.pakemanId)
+            then cmdAddConsole ("Wow ! A " ++ pakeman.name ++ ", wild !")
+            else Cmd.none)
 
 
 cmdAddConsole: String -> Cmd Message

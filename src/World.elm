@@ -1,8 +1,10 @@
-module World exposing (World, canAddVisiblePakeman, init, view, addVisiblePakeman)
+module World exposing (World, freeEncounter, canEncounter, addEncounter, init, view)
 
 import Html exposing (Html, div, text)
 import Html.Attributes exposing (class)
+import Time
 
+import Encounter
 import Pakeman
 import Pakedex
 import Zone
@@ -12,7 +14,7 @@ import Zones.Road1
 
 type alias World = {
         currentZone: Zone.Zone,
-        visiblePakemans: List Pakeman.Pakeman
+        encounters: List Encounter.Encounter
     }
 
 
@@ -26,31 +28,39 @@ view world pakedex =
         Html.h4 [] [text world.currentZone.name],
         Html.h5 [] [text "Pakeman in sight"],
         div [class "flex flex-wrap"] (
-            List.map (\ pakeman -> 
+            List.map (\ encounter -> 
                 div [class "w-25"] [
                     Pakeman.displayCard 
-                        pakeman 
+                        (Pakedex.getPakeman pakedex encounter.pakemanId)
                         True 
-                        (Pakedex.hasCapturedPakeman pakedex pakeman.id)
+                        False
                 ]
-        ) world.visiblePakemans),
+        ) world.encounters),
         Html.h5 [] [text "Pakeman species in zone"],
         div [class "flex flex-wrap"] (
-            List.map (\ species -> 
+            List.map (\ pakemanId -> 
                 div [class "w-25"] [
                     Pakeman.displayCard 
-                        (Pakedex.getPakeman pakedex species) 
-                        (Pakedex.hasSeenPakeman pakedex species)
-                        (Pakedex.hasCapturedPakeman pakedex species)
+                        (Pakedex.getPakeman pakedex pakemanId) 
+                        (Pakedex.hasSeenPakeman pakedex pakemanId)
+                        (Pakedex.hasCapturedPakeman pakedex pakemanId)
                 ] 
             ) (Zone.getSpecies world.currentZone)
         )
     ]
 
-addVisiblePakeman: Pakeman.Pakeman -> World -> World
-addVisiblePakeman pakeman world = { world | 
-        visiblePakemans = List.append world.visiblePakemans [pakeman] 
+
+addEncounter: Encounter.Encounter -> World -> World
+addEncounter encounter world = { world | 
+        encounters = List.append world.encounters [encounter] 
     }
 
-canAddVisiblePakeman: World -> Bool
-canAddVisiblePakeman world = List.length world.visiblePakemans < 8
+canEncounter: World -> Bool
+canEncounter world = List.length world.encounters < 8
+
+freeEncounter: World -> Time.Posix -> World
+freeEncounter world time = { world | 
+        encounters = List.filter (\ encounter -> 
+            Time.posixToMillis time < Time.posixToMillis encounter.time + encounter.duration * 1000
+        ) world.encounters       
+    }

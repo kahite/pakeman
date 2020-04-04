@@ -64,5 +64,5 @@ init = Pakedex
         (8, Species.P8_Coroboffe.create),
         (9, Species.P9_Tartonk.create)
     ])
-    (Set.insert 4 (Set.insert 9 Set.empty))
+    Set.empty
     (Set.insert 9 Set.empty)
