@@ -4,28 +4,36 @@ import Html exposing (Html, div, text)
 import Html.Attributes exposing (class)
 import Time
 
-import Encounter
+import Encounter 
 import Pakeman
-import Pakedex
-import Zone
+import Pakedex exposing (Pakedex)
+import Zones.Model exposing (Zone, getPakemans, hasPakeman)
 
-import Zones.Road1 
+import Zones.BourgPoulette 
 
 
 type alias World = {
-        currentZone: Zone.Zone,
+        currentZone: Zone,
         encounters: List Encounter.Encounter
     }
 
 
 init: World
-init = World Zones.Road1.create []
+init = World Zones.BourgPoulette.create []
 
 
-view: World -> Pakedex.Pakedex -> Html msg
+view: World -> Pakedex -> Html msg
 view world pakedex = 
-    div [] [
-        Html.h4 [] [text world.currentZone.name],
+    div [] (List.concat [
+        [Html.h4 [] [text world.currentZone.name]],
+        displayPakemanInSight world pakedex,
+        displayPakemanInZone world pakedex
+    ])
+
+displayPakemanInSight: World -> Pakedex -> List (Html msg)
+displayPakemanInSight world pakedex = 
+    if hasPakeman world.currentZone
+    then [
         Html.h5 [] [text "Pakeman in sight"],
         div [class "flex flex-wrap"] (
             List.map (\ encounter -> 
@@ -35,7 +43,14 @@ view world pakedex =
                         True 
                         False
                 ]
-        ) world.encounters),
+        ) world.encounters)
+    ]
+    else []
+
+displayPakemanInZone: World -> Pakedex -> List (Html msg)
+displayPakemanInZone world pakedex = 
+    if hasPakeman world.currentZone
+    then [            
         Html.h5 [] [text "Pakeman species in zone"],
         div [class "flex flex-wrap"] (
             List.map (\ pakemanId -> 
@@ -45,9 +60,10 @@ view world pakedex =
                         (Pakedex.hasSeenPakeman pakedex pakemanId)
                         (Pakedex.hasCapturedPakeman pakedex pakemanId)
                 ] 
-            ) (Zone.getSpecies world.currentZone)
+            ) (getPakemans world.currentZone)
         )
     ]
+    else []
 
 
 addEncounter: Encounter.Encounter -> World -> World
@@ -56,7 +72,9 @@ addEncounter encounter world = { world |
     }
 
 canEncounter: World -> Bool
-canEncounter world = List.length world.encounters < 8
+canEncounter world 
+    = List.length world.encounters < 8
+    && hasPakeman world.currentZone
 
 freeEncounter: World -> Time.Posix -> World
 freeEncounter world time = { world | 

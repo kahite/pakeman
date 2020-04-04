@@ -3,7 +3,7 @@ module Encounter exposing (Encounter, genEncounter, genTryEncounter)
 import Random 
 import Time
 
-import Zone
+import Zones.Model as Zone
 
 
 type alias Encounter = {

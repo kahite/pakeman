@@ -1,12 +1,13 @@
 module Zones.Road1 exposing (create)
 
-import Zone
+import Zones.Model exposing (Zone, Identity(..))
  
 
-create: Zone.Zone
-create = Zone.Zone
+create: Zone
+create = Zone
     "Road 1"
-    (Zone.Zones [])
+    Road1
+    [BourgPoulette]
     [
         (25, 1), 
         (25, 4), 
