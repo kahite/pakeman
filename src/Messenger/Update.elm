@@ -1,10 +1,10 @@
-module PakeMessenger.Update exposing (update)
+module Messenger.Update exposing (update)
 
 import Dict
 
 import Message as Main exposing (Message(..))
-import PakeMessenger.Message exposing (Message(..))
-import PakeMessenger.Model exposing (Messenger)
+import Messenger.Message exposing (Message(..))
+import Messenger.Model exposing (Messenger)
 
 
 update: Main.Message -> Messenger -> Messenger

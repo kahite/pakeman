@@ -6,7 +6,7 @@ import Html.Attributes exposing (class)
 import Message exposing (Message(..))
 import Model exposing (Model)
 import Pakedex.View as Pakedex
-import PakeMessenger.View as Messenger
+import Messenger.View as Messenger
 import World.View as World
 
 

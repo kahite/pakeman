@@ -1,4 +1,4 @@
-module PakeMessenger.Model exposing (Messenger, Comment, init)
+module Messenger.Model exposing (Messenger, Comment, init)
 
 import Dict
 

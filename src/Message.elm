@@ -1,6 +1,6 @@
 module Message exposing (Message(..))
 
-import PakeMessenger.Message as Messenger
+import Messenger.Message as Messenger
 import Pakedex.Message as Pakedex
 import World.Message as World
 

@@ -1,10 +1,10 @@
-module PakeMessenger.Command exposing (cmd, cmdAddComment, cmdAddNarratorMessage)
+module Messenger.Command exposing (cmd, cmdAddComment, cmdAddNarratorMessage)
 
 import Task
 
 import Message as Main exposing (Message(..))
-import PakeMessenger.Message exposing (Message(..))
-import PakeMessenger.Model exposing (Messenger, Comment)
+import Messenger.Message exposing (Message(..))
+import Messenger.Model exposing (Messenger, Comment)
 import People.Model exposing (People, narrator)
 
 

@@ -5,7 +5,7 @@ import Random
 import Encounter
 import Message as Main exposing (Message(..))
 import Pakedex.Command as Pakedex
-import PakeMessenger.Command as Messenger
+import Messenger.Command as Messenger
 import World.Message exposing (Message(..))
 import World.Model exposing (World, canEncounter)
 

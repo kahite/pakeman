@@ -1,10 +1,10 @@
-module PakeMessenger.View exposing (view)
+module Messenger.View exposing (view)
 
 import Dict
 import Html exposing (Html, div, span, text)
 import Html.Attributes exposing (class)
 
-import PakeMessenger.Model exposing (Messenger)
+import Messenger.Model exposing (Messenger)
 import People.Model as People
 
 

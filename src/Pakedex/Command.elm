@@ -5,7 +5,7 @@ import Task
 import Message as Main exposing (Message(..))
 import Pakedex.Message exposing (Message(..))
 import Pakedex.Model exposing (Pakedex, getPakeman, hasSeenPakeman)
-import PakeMessenger.Command as Messenger
+import Messenger.Command as Messenger
 
 
 cmd: Main.Message -> Pakedex -> Cmd Main.Message

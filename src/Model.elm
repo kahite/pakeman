@@ -2,8 +2,8 @@ module Model exposing (Model, init)
 
 import Message exposing (Message(..))
 import Pakedex.Model as Pakedex
-import PakeMessenger.Command as MessengerCommand
-import PakeMessenger.Model as Messenger
+import Messenger.Command as MessengerCommand
+import Messenger.Model as Messenger
 import World.Model as World
 
 

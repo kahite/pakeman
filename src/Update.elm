@@ -3,7 +3,7 @@ module Update exposing (update)
 import Message exposing (Message(..))
 import Model exposing (Model)
 import Pakedex.Update as Pakedex
-import PakeMessenger.Update as Messenger
+import Messenger.Update as Messenger
 import World.Update as World
 
 update : Message -> Model -> Model

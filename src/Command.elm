@@ -3,7 +3,7 @@ module Command exposing (cmd)
 import Message exposing (Message(..))
 import Model exposing (Model)
 import Pakedex.Command as Pakedex
-import PakeMessenger.Command as Messenger
+import Messenger.Command as Messenger
 import World.Command as World
 
 
