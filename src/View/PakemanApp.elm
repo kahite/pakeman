@@ -4,7 +4,7 @@ import Html exposing (Html, div)
 import Html.Attributes exposing (class)
 
 import Pakedex
-import PakeMessenger as Messenger
+import PakeMessenger.View as Messenger
 import World
 
 import Message exposing (Message(..))
@@ -20,6 +20,6 @@ view model =
             Html.map (\ msg -> WorldMessage msg) (World.view model.world model.pakedex)
         ],
         div [class "w-30 pa3"] [
-            Html.map (\ msg -> MessengerMessage msg) (Messenger.view model.messenger)
+            Messenger.view model.messenger
         ]
     ]
