@@ -1,6 +1,6 @@
 module Messenger.Message exposing (Message(..))
 
-import Messenger.Model exposing (Comment)
+import Messenger.Comment.Model exposing (Comment)
 
 
 type Message 

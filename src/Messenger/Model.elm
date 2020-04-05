@@ -1,7 +1,8 @@
-module Messenger.Model exposing (Messenger, Comment, init)
+module Messenger.Model exposing (Messenger, init)
 
 import Dict
 
+import Messenger.Comment.Model exposing (Comment)
 import People.Model as People
 
 
@@ -10,10 +11,6 @@ type alias Messenger = {
         comments: List Comment 
     }
 
-type alias Comment = {
-        people: People.People,
-        comment: String
-    }
 
 init: Messenger
 init = Messenger Dict.empty []

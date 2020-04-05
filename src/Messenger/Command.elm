@@ -4,7 +4,8 @@ import Task
 
 import Message as Main exposing (Message(..))
 import Messenger.Message exposing (Message(..))
-import Messenger.Model exposing (Messenger, Comment)
+import Messenger.Model exposing (Messenger)
+import Messenger.Comment.Model exposing (Comment)
 import People.Model exposing (People, narrator)
 
 
