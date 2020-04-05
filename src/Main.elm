@@ -7,7 +7,7 @@ import Message exposing (Message(..))
 import Model exposing (Model)
 import Subscriptions exposing (subscriptions)
 import Update exposing (update)
-import View.PakemanApp exposing (view)
+import View exposing (view)
 
 main : Program () Model Message
 main = 

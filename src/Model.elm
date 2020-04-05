@@ -1,11 +1,10 @@
 module Model exposing (Model, init)
 
 import Message exposing (Message(..))
-import Pakedex
-import PakeMessenger.Update as MessengerCommands
+import Pakedex.Model as Pakedex
+import PakeMessenger.Command as MessengerCommand
 import PakeMessenger.Model as Messenger
-import People.Model as People
-import World
+import World.Model as World
 
 
 type alias Model = {
@@ -17,8 +16,11 @@ type alias Model = {
 
 init : () -> (Model, Cmd Message)
 init _ = (
-        Model Pakedex.init World.init Messenger.init, 
+        Model 
+            Pakedex.init 
+            World.init 
+            Messenger.init, 
         Cmd.batch [
-            MessengerCommands.cmdAddComment (Messenger.Comment People.narrator "Welcome to Pakeman !")
+            MessengerCommand.cmdAddNarratorMessage "Welcome to Pakeman !"
         ]
     )

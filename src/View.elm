@@ -1,14 +1,14 @@
-module View.PakemanApp exposing (view)
+module View exposing (view)
 
 import Html exposing (Html, div)
 import Html.Attributes exposing (class)
 
-import Pakedex
-import PakeMessenger.View as Messenger
-import World
-
 import Message exposing (Message(..))
 import Model exposing (Model)
+import Pakedex.View as Pakedex
+import PakeMessenger.View as Messenger
+import World.View as World
+
 
 view : Model -> Html Message
 view model =
@@ -17,7 +17,7 @@ view model =
             Pakedex.view model.pakedex
         ],
         div [class "w-50 pa3"] [
-            Html.map (\ msg -> WorldMessage msg) (World.view model.world model.pakedex)
+            World.view model.world model.pakedex
         ],
         div [class "w-30 pa3"] [
             Messenger.view model.messenger

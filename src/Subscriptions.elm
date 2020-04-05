@@ -1,11 +1,12 @@
 module Subscriptions exposing (subscriptions)
 
-import Time
-
 import Message exposing (Message(..))
 import Model exposing (Model)
+import World.Subscriptions as World
 
 
 subscriptions : Model -> Sub Message
-subscriptions _ = 
-    Time.every 1000 Timer
+subscriptions model = 
+    Sub.batch [
+        World.subscriptions model.world
+    ]

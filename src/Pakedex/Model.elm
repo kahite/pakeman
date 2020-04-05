@@ -1,7 +1,6 @@
-module Pakedex exposing (Pakedex, addSeenPakeman, init, view, getPakeman, hasSeenPakeman, hasCapturedPakeman)
+module Pakedex.Model exposing (Pakedex, init, getPakeman, hasSeenPakeman, hasCapturedPakeman)
 
 import Dict
-import Html exposing (Html, div, text)
 import Set exposing (Set)
 
 import Pakeman 
@@ -39,20 +38,6 @@ type alias Pakedex = {
     }
 
 
-view: Pakedex -> Html msg
-view pakedex = 
-    div [] [
-        Html.h3 [] [text "Pakedex"],
-        div [] (List.map (\ (id, pakeman) -> 
-            div [] [
-                if hasSeenPakeman pakedex id
-                then text pakeman.name
-                else text "-----"
-            ]
-        ) (Dict.toList pakedex.list))
-    ]
-
-
 getPakeman: Pakedex -> Int -> Pakeman.Pakeman
 getPakeman pakedex id = 
     case Dict.get id pakedex.list of
@@ -62,10 +47,6 @@ getPakeman pakedex id =
 hasSeenPakeman: Pakedex -> Int -> Bool
 hasSeenPakeman pakedex id = Set.member id pakedex.seen
 
-addSeenPakeman: Pakedex -> Int -> Pakedex
-addSeenPakeman pakedex id = {pakedex |
-        seen = Set.insert id pakedex.seen
-    }
 
 hasCapturedPakeman: Pakedex -> Int -> Bool
 hasCapturedPakeman pakedex id = Set.member id pakedex.captured
