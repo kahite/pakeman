@@ -8,7 +8,8 @@ import Message as Main exposing (Message(..))
 import Pakedex.Model as Pakedex exposing (Pakedex)
 import Pakeman.View as Pakeman
 import People.View as People
-import Zones.Model as Zone
+import Zones.Model as ZoneModel
+import Zones.View as Zone
 import World.Model exposing (World)
 import World.Message exposing (Message(..))
 
@@ -25,7 +26,7 @@ view world pakedex =
 
 displayPakemanInSight: World -> Pakedex -> List (Html msg)
 displayPakemanInSight world pakedex = 
-    if Zone.hasPakeman world.currentZone
+    if ZoneModel.hasPakeman world.currentZone
     then [
         Html.h5 [class "tl"] [text "Pakeman in sight"],
         div [class "flex flex-wrap"] (
@@ -42,7 +43,7 @@ displayPakemanInSight world pakedex =
 
 displayPakemanInZone: World -> Pakedex -> List (Html msg)
 displayPakemanInZone world pakedex = 
-    if Zone.hasPakeman world.currentZone
+    if ZoneModel.hasPakeman world.currentZone
     then [            
         Html.h5 [class "tl"] [text "Pakeman species in zone"],
         div [class "flex flex-wrap"] (
@@ -53,20 +54,20 @@ displayPakemanInZone world pakedex =
                         (Pakedex.hasSeenPakeman pakedex pakemanId)
                         (Pakedex.hasCapturedPakeman pakedex pakemanId)
                 ] 
-            ) (Zone.getPakemans world.currentZone)
+            ) (ZoneModel.getPakemans world.currentZone)
         )
     ]
     else []
 
 displayPeopleInZone: World -> List (Html Main.Message)
 displayPeopleInZone world = 
-    if Zone.hasPeople world.currentZone
+    if ZoneModel.hasPeople world.currentZone
     then [            
         Html.h5 [class "tl"] [text "Talk to"],
         div [class "flex flex-wrap"] (
             List.map (\ people -> 
                 div [class "w-25"] [People.display people (MessageForWorld (TalkTo people))] 
-            ) (Zone.getPeople world.currentZone)
+            ) (ZoneModel.getPeople world.currentZone)
         )
     ]
     else []
@@ -79,7 +80,7 @@ displayAvailableZones world =
             List.map (\ zone -> 
                 div [class "w-25"] [Zone.display zone (MessageForWorld (ChangeZone zone.id))] 
             ) (
-                let filterAccessible = \ id _ -> Zone.isZoneAccessible world.currentZone id
+                let filterAccessible = \ id _ -> ZoneModel.isZoneAccessible world.currentZone id
                 in
                     List.map (\ (_, z) -> z)
                     (Dict.toList (Dict.filter filterAccessible world.zones))
