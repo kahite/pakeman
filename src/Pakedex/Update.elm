@@ -1,6 +1,5 @@
 module Pakedex.Update exposing (update)
 
-import Set
 
 import Message as Main exposing (Message(..))
 import Pakedex.Message exposing (Message(..))
@@ -17,4 +16,4 @@ updatePakedex: Message -> Pakedex -> Pakedex
 updatePakedex msg pakedex = 
     case msg of 
         AddSeenPakeman pakemanId ->
-            { pakedex | seen = Set.insert pakemanId pakedex.seen }
+            { pakedex | seen = List.append [pakemanId] pakedex.seen }

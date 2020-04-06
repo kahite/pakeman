@@ -1,5 +1,6 @@
 module Zones.Z2_Road1 exposing (create)
 
+import Pakeman.Model exposing (Identity(..))
 import Zones.Model exposing (Zone, Biotope(..))
  
 
@@ -11,12 +12,12 @@ create = Zone
     [1]
     []
     [
-        (50, 16), 
-        (50, 19),
-        (25, 10),
-        (25, 13), 
-        (25, 21), 
-        (5, 1), 
-        (5, 4), 
-        (5, 7)
+        (50, Raicaal), 
+        (50, Rototo),
+        (25, Chenupon),
+        (25, Ospucat), 
+        (25, Poufobac), 
+        (5, Bilbuzorre), 
+        (5, Solomiche), 
+        (5, Coropice)
     ]

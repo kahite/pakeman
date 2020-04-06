@@ -1,85 +1,85 @@
 module Pakedex.Model exposing (Pakedex, init, getPakeman, hasSeenPakeman, hasCapturedPakeman)
 
-import Dict
-import Set exposing (Set)
-
-import Pakeman 
-import Species.P1_Bilbuzorre
-import Species.P2_Herbuzorre
-import Species.P3_Flaruzorre
-import Species.P4_Solomiche
-import Species.P5_Reptuncel
-import Species.P6_Drocoifei
-import Species.P7_Coropice
-import Species.P8_Coroboffe
-import Species.P9_Tartonk
-import Species.P10_Chenupon
-import Species.P11_Chrysoceur
-import Species.P12_Populisuan
-import Species.P13_Ospucat
-import Species.P14_Cacanfart
-import Species.P15_Dordoignon
-import Species.P16_Raicaal
-import Species.P17_Raicaips
-import Species.P18_Raicornoge
-import Species.P19_Rototo
-import Species.P20_Rototoc
-import Species.P21_Poufobac
-import Species.P22_Reposdepac
-import Species.P23_Oba
-import Species.P24_Orbak
-import Species.P25_Pukochi
+import Pakeman.Model exposing (Pakeman, Identity(..)) 
+import Pakeman.Data.P1_Bilbuzorre
+import Pakeman.Data.P2_Herbuzorre
+import Pakeman.Data.P3_Flaruzorre
+import Pakeman.Data.P4_Solomiche
+import Pakeman.Data.P5_Reptuncel
+import Pakeman.Data.P6_Drocoifei
+import Pakeman.Data.P7_Coropice
+import Pakeman.Data.P8_Coroboffe
+import Pakeman.Data.P9_Tartonk
+import Pakeman.Data.P10_Chenupon
+import Pakeman.Data.P11_Chrysoceur
+import Pakeman.Data.P12_Populisuan
+import Pakeman.Data.P13_Ospucat
+import Pakeman.Data.P14_Cacanfart
+import Pakeman.Data.P15_Dordoignon
+import Pakeman.Data.P16_Raicaal
+import Pakeman.Data.P17_Raicaips
+import Pakeman.Data.P18_Raicornoge
+import Pakeman.Data.P19_Rototo
+import Pakeman.Data.P20_Rototoc
+import Pakeman.Data.P21_Poufobac
+import Pakeman.Data.P22_Reposdepac
+import Pakeman.Data.P23_Oba
+import Pakeman.Data.P24_Orbak
+import Pakeman.Data.P25_Pukochi
 
 
 type alias Pakedex = {
-        list: Dict.Dict Int Pakeman.Pakeman,
-        seen: Set Int,
-        captured: Set Int
+        list: List Pakeman,
+        seen: List Identity,
+        captured: List Identity
     }
 
 
-getPakeman: Pakedex -> Int -> Pakeman.Pakeman
-getPakeman pakedex id = 
-    case Dict.get id pakedex.list of
-        Just p -> p
-        Nothing -> Pakeman.init
+getPakeman: Pakedex -> Identity -> Pakeman
+getPakeman pakedex identity = 
+    let isPakeman = List.head (List.filter (\ pakeman -> pakeman.identity == identity) pakedex.list)
+    in
+    case isPakeman of
+        Just justPakeman -> justPakeman
+        Nothing -> Pakeman.Model.init
 
-hasSeenPakeman: Pakedex -> Int -> Bool
-hasSeenPakeman pakedex id = Set.member id pakedex.seen
+hasSeenPakeman: Pakedex -> Identity -> Bool
+hasSeenPakeman pakedex identity = List.member identity pakedex.seen
 
 
-hasCapturedPakeman: Pakedex -> Int -> Bool
-hasCapturedPakeman pakedex id = Set.member id pakedex.captured
+hasCapturedPakeman: Pakedex -> Identity -> Bool
+hasCapturedPakeman pakedex identity = List.member identity pakedex.captured
 
 
 init: Pakedex
 init = Pakedex 
-    (Dict.fromList [
-        (1, Species.P1_Bilbuzorre.create),
-        (2, Species.P2_Herbuzorre.create),
-        (3, Species.P3_Flaruzorre.create),
-        (4, Species.P4_Solomiche.create),
-        (5, Species.P5_Reptuncel.create),
-        (6, Species.P6_Drocoifei.create),
-        (7, Species.P7_Coropice.create),
-        (8, Species.P8_Coroboffe.create),
-        (9, Species.P9_Tartonk.create),
-        (10, Species.P10_Chenupon.create),
-        (11, Species.P11_Chrysoceur.create),
-        (12, Species.P12_Populisuan.create),
-        (13, Species.P13_Ospucat.create),
-        (14, Species.P14_Cacanfart.create),
-        (15, Species.P15_Dordoignon.create),
-        (16, Species.P16_Raicaal.create),
-        (17, Species.P17_Raicaips.create),
-        (18, Species.P18_Raicornoge.create),
-        (19, Species.P19_Rototo.create),
-        (20, Species.P20_Rototoc.create),
-        (21, Species.P21_Poufobac.create),
-        (22, Species.P22_Reposdepac.create),
-        (23, Species.P23_Oba.create),
-        (24, Species.P24_Orbak.create),
-        (25, Species.P25_Pukochi.create)
-    ])
-    Set.empty
-    Set.empty
+    [
+        Pakeman.Data.P1_Bilbuzorre.create,
+        Pakeman.Data.P2_Herbuzorre.create,
+        Pakeman.Data.P3_Flaruzorre.create,
+        Pakeman.Data.P4_Solomiche.create,
+        Pakeman.Data.P5_Reptuncel.create,
+        Pakeman.Data.P6_Drocoifei.create,
+        Pakeman.Data.P7_Coropice.create,
+        Pakeman.Data.P8_Coroboffe.create,
+        Pakeman.Data.P9_Tartonk.create,
+        Pakeman.Data.P10_Chenupon.create,
+        Pakeman.Data.P11_Chrysoceur.create,
+        Pakeman.Data.P12_Populisuan.create,
+        Pakeman.Data.P13_Ospucat.create,
+        Pakeman.Data.P14_Cacanfart.create,
+        Pakeman.Data.P15_Dordoignon.create,
+        Pakeman.Data.P16_Raicaal.create,
+        Pakeman.Data.P17_Raicaips.create,
+        Pakeman.Data.P18_Raicornoge.create,
+        Pakeman.Data.P19_Rototo.create,
+        Pakeman.Data.P20_Rototoc.create,
+        Pakeman.Data.P21_Poufobac.create,
+        Pakeman.Data.P22_Reposdepac.create,
+        Pakeman.Data.P23_Oba.create,
+        Pakeman.Data.P24_Orbak.create,
+        Pakeman.Data.P25_Pukochi.create
+    ]
+    []
+    []
+    

@@ -1,22 +1,13 @@
-module Pakeman exposing (Pakeman, init, displayCard)
+module Pakeman.View exposing (displayCard)
 
 import Html exposing (Html, div, text)
 import Html.Attributes exposing (class)
 
+import Pakeman.Model exposing (Pakeman)
 import SvgHelper
 import Type
 
 
-type alias Pakeman = {
-        id: Int,
-        name: String,
-        firstType: Type.Type,
-        secondType: Type.Type
-    }
-
-
-init: Pakeman
-init = Pakeman 0 "MissingNo" Type.Nothing Type.Nothing
 
 displayCard: Pakeman -> Bool -> Bool -> Html msg
 displayCard pakeman visible captured = 

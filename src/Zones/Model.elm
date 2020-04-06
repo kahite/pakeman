@@ -4,6 +4,7 @@ import Html exposing (Html, div, text)
 import Html.Attributes exposing (class)
 import Html.Events exposing (onClick)
 
+import Pakeman.Model exposing (Identity(..))
 import People.Model exposing (People)
 
 
@@ -13,7 +14,7 @@ type alias Zone = {
         biotope: Biotope,
         accessibleZones: List Int,
         people: List People,
-        pakemanPresence: List (Float, Int)
+        pakemanPresence: List (Float, Identity)
     }
 
 type Biotope 
@@ -24,10 +25,10 @@ type Biotope
     | Moutain
     | Cavern
 
-getPropabilities: Zone -> List (Float, Int)
+getPropabilities: Zone -> List (Float, Identity)
 getPropabilities zone = zone.pakemanPresence
 
-getPakemans: Zone -> List Int
+getPakemans: Zone -> List Identity
 getPakemans zone = List.map (\ (_, species) -> species) zone.pakemanPresence
 
 hasPakeman: Zone -> Bool
