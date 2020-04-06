@@ -3,7 +3,7 @@ module World.Command exposing (cmd)
 import Random 
 import Task
 
-import Encounter
+import World.Encounter.Model as Encounter
 import Message as Main exposing (Message(..))
 import Pakedex.Command as Pakedex
 import Messenger.Command as Messenger

@@ -1,7 +1,7 @@
 module Pakeman.Data.P15_Dordoignon exposing (create)
 
 import Pakeman.Model as Pakeman exposing (Pakeman, Identity(..))
-import Type
+import Pakeman.Type as Type exposing (Type(..))
 
 
 create: Pakeman.Pakeman

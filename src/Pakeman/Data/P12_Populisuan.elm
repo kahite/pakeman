@@ -1,7 +1,7 @@
 module Pakeman.Data.P12_Populisuan exposing (create)
 
 import Pakeman.Model as Pakeman exposing (Pakeman, Identity(..))
-import Type
+import Pakeman.Type as Type exposing (Type(..))
 
 
 create: Pakeman.Pakeman

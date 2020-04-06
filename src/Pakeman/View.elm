@@ -4,8 +4,8 @@ import Html exposing (Html, div, text)
 import Html.Attributes exposing (class)
 
 import Pakeman.Model exposing (Pakeman)
-import SvgHelper
-import Type
+import Pakeman.SvgHelper exposing (capturedIcon)
+import Pakeman.Type as Type exposing (Type(..))
 
 
 
@@ -17,7 +17,7 @@ displayCard pakeman visible captured =
         div [] [text name],
         div [class "absolute top-0 left-0"] [
             if captured && visible
-            then SvgHelper.capturedIcon "black"
+            then capturedIcon "black"
             else text ""
         ]
     ]

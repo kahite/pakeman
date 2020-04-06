@@ -1,13 +1,13 @@
 module Pakeman.Model exposing (Pakeman, Identity(..), init)
 
-import Type
+import Pakeman.Type as Type exposing (Type(..))
 
 
 type alias Pakeman = {
         identity: Identity,
         name: String,
-        firstType: Type.Type,
-        secondType: Type.Type
+        firstType: Type,
+        secondType: Type
     }
 
 

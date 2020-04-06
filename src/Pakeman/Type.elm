@@ -1,4 +1,4 @@
-module Type exposing (Type(..), getBgColor)
+module Pakeman.Type exposing (Type(..), getBgColor)
 
 type Type 
     = Normal

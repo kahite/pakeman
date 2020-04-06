@@ -1,4 +1,4 @@
-module People.P2_ProfChichon exposing (create)
+module People.Data.P2_ProfChichon exposing (create)
 
 import People.Model exposing (People)
 

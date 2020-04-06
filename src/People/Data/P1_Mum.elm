@@ -1,4 +1,4 @@
-module People.P1_Mum exposing (create)
+module People.Data.P1_Mum exposing (create)
 
 import People.Model exposing (People)
 

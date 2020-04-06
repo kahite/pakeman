@@ -1,4 +1,4 @@
-module SvgHelper exposing (capturedIcon)
+module Pakeman.SvgHelper exposing (capturedIcon)
 
 import Html exposing (Html)
 import Html.Attributes exposing (style)

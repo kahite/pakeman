@@ -1,4 +1,4 @@
-module Encounter exposing (Encounter, genEncounter, genTryEncounter)
+module World.Encounter.Model exposing (Encounter, genEncounter, genTryEncounter)
 
 import Random 
 import Time

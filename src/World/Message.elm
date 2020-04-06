@@ -2,7 +2,7 @@ module World.Message exposing (Message(..))
 
 import Time 
 
-import Encounter exposing (Encounter)
+import World.Encounter.Model exposing (Encounter)
 import People.Model exposing (People)
 
 
