@@ -1,4 +1,4 @@
-module Zones.Model exposing (Zone, Biotope(..), Identity(..), getPeople, hasPeople, hasPakeman, getPropabilities, getPakemans)
+module World.Zones.Model exposing (Zone, Biotope(..), Identity(..), getPeople, hasPeople, hasPakeman, getPropabilities, getPakemans)
 
 import Pakeman.Model as Pakeman exposing (Identity(..))
 import People.Model exposing (People)

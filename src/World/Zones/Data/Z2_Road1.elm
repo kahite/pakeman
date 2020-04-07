@@ -1,7 +1,7 @@
-module Zones.Data.Z2_Road1 exposing (create)
+module World.Zones.Data.Z2_Road1 exposing (create)
 
 import Pakeman.Model exposing (Identity(..))
-import Zones.Model exposing (Zone, Biotope(..), Identity(..))
+import World.Zones.Model exposing (Zone, Biotope(..), Identity(..))
  
 
 create: Zone

@@ -1,10 +1,10 @@
 module World.Model exposing (World, init, canEncounter)
 
 import World.Encounter.Model as Encounter  
-import Zones.Model as Zone
+import World.Zones.Model as Zone
 
-import Zones.Data.Z1_BourgPoulette as Z1_BourgPoulette
-import Zones.Data.Z2_Road1 as Z2_Road1
+import World.Zones.Data.Z1_BourgPoulette as Z1_BourgPoulette
+import World.Zones.Data.Z2_Road1 as Z2_Road1
 
 
 type alias World = {

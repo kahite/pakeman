@@ -2,9 +2,10 @@ module World.Message exposing (Message(..))
 
 import Time 
 
-import World.Encounter.Model exposing (Encounter)
 import People.Model exposing (People)
-import Zones.Model exposing (Zone)
+import World.Encounter.Model exposing (Encounter)
+import World.Zones.Message as Zone
+import World.Zones.Model exposing (Zone)
 
 
 type Message 
@@ -14,3 +15,4 @@ type Message
     | EncounterFinish Time.Posix
     | ChangeZone Zone
     | TalkTo People
+    | MessageForZone Zone.Message

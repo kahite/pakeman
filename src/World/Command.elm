@@ -3,12 +3,15 @@ module World.Command exposing (cmd)
 import Random 
 import Task
 
-import World.Encounter.Model as Encounter
 import Message as Main exposing (Message(..))
-import Pakedex.Command as Pakedex
 import Messenger.Command as Messenger
+import Pakedex.Command as Pakedex
+import People.Data.P2_ProfChichon as ProfChichon
+import People.Model exposing (Identity(..))
+import World.Encounter.Model as Encounter
 import World.Message exposing (Message(..))
 import World.Model exposing (World, canEncounter)
+import World.Zones.Command exposing (cmdAddPeople)
 
 
 cmd : Main.Message -> World -> Cmd Main.Message
@@ -35,5 +38,10 @@ cmdWorld msg world =
         MakeEncounter encounter ->
                 Pakedex.cmdAddSeenPakeman encounter.pakemanId
         TalkTo people -> 
-            Messenger.cmdAddComment people people.welcomeText
+            Cmd.batch [
+                Messenger.cmdAddComment people people.welcomeText,
+                if people.identity == Mum
+                then cmdAddPeople ProfChichon.create
+                else Cmd.none
+            ]
         _ -> Cmd.none

@@ -7,8 +7,8 @@ import Message as Main exposing (Message(..))
 import Pakedex.Model as Pakedex exposing (Pakedex)
 import Pakeman.View as Pakeman
 import People.View as People
-import Zones.Model as ZoneModel
-import Zones.View as Zone
+import World.Zones.Model as ZoneModel
+import World.Zones.View as Zone
 import World.Model exposing (World)
 import World.Message exposing (Message(..))
 

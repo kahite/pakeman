@@ -4,7 +4,7 @@ import Random
 import Time
 
 import Pakeman.Model exposing (Identity(..))
-import Zones.Model as Zone
+import World.Zones.Model as Zone
 
 
 type alias Encounter = {

@@ -1,10 +1,10 @@
-module Zones.View exposing (display)
+module World.Zones.View exposing (display)
 
 import Html exposing (Html, div, text)
 import Html.Attributes exposing (class)
 import Html.Events exposing (onClick)
 
-import Zones.Model exposing (Zone, Biotope(..))
+import World.Zones.Model exposing (Zone, Biotope(..))
 
 
 display: Zone -> msg -> Html msg
@@ -19,7 +19,7 @@ display zone msg =
 getBgColor: Zone -> String
 getBgColor zone =
     case zone.biotope of
-        Zones.Model.Nothing -> ""
+        World.Zones.Model.Nothing -> ""
         City -> "bg-light-silver"
         Plain -> "bg-green"
         Forest -> "bg-dark-green"
