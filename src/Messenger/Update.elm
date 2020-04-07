@@ -1,7 +1,5 @@
 module Messenger.Update exposing (update)
 
-import Dict
-
 import Message as Main exposing (Message(..))
 import Messenger.Message exposing (Message(..))
 import Messenger.Model exposing (Messenger)
@@ -19,5 +17,8 @@ updateMessenger msg messenger =
         AddComment comment -> 
             { messenger | 
                 comments = List.append [comment] messenger.comments,
-                people = Dict.insert comment.people.id comment.people messenger.people
+                people = 
+                    if List.member comment.people messenger.people
+                    then messenger.people
+                    else List.append [comment.people] messenger.people
             }

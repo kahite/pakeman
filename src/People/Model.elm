@@ -1,8 +1,8 @@
-module People.Model exposing (People, getMessageColor, getName, narrator)
+module People.Model exposing (People, Identity(..), getMessageColor, getName, narrator)
 
 
 type alias People = {
-        id: Int,
+        identity: Identity,
         name: String,
         welcomeText: String,
         messageColor: String,
@@ -10,9 +10,14 @@ type alias People = {
         textColor: String
     }
 
+type Identity 
+    = Narrator
+    | Mum
+    | ProfChichon
+
 
 narrator: People
-narrator = People -1 "" "" "" "" ""
+narrator = People Narrator "" "" "" "" ""
 
 getName: People -> String
 getName people = people.name
