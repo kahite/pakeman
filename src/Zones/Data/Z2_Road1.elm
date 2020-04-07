@@ -1,15 +1,17 @@
 module Zones.Data.Z2_Road1 exposing (create)
 
 import Pakeman.Model exposing (Identity(..))
-import Zones.Model exposing (Zone, Biotope(..))
+import Zones.Model exposing (Zone, Biotope(..), Identity(..))
  
 
 create: Zone
 create = Zone
-    2
+    Road1
     "Road 1"
     Plain
-    [1]
+    [
+        BourgPoulette
+    ]
     []
     [
         (50, Raicaal), 

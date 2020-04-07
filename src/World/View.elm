@@ -1,6 +1,5 @@
 module World.View exposing (view)
 
-import Dict
 import Html exposing (Html, div, text)
 import Html.Attributes exposing (class)
 
@@ -78,12 +77,18 @@ displayAvailableZones world =
         Html.h5 [class "tl"] [text "Travel to"],
         div [class "flex flex-wrap"] (
             List.map (\ zone -> 
-                div [class "w-25"] [Zone.display zone (MessageForWorld (ChangeZone zone.id))] 
-            ) (
-                let filterAccessible = \ id _ -> ZoneModel.isZoneAccessible world.currentZone id
-                in
-                    List.map (\ (_, z) -> z)
-                    (Dict.toList (Dict.filter filterAccessible world.zones))
-            )
+                div [class "w-25"] [Zone.display zone (MessageForWorld (ChangeZone zone))] 
+            ) (getAccessibleZones world)
         )
     ]
+
+
+getAccessibleZones: World -> List ZoneModel.Zone
+getAccessibleZones world = 
+    List.filterMap
+    (\ identity -> 
+        List.head (List.filter (\ zone -> zone.id == identity) world.zones)
+    )
+    world.currentZone.accessibleZones
+
+

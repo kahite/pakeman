@@ -1,16 +1,16 @@
-module Zones.Model exposing (Zone, Biotope(..), isZoneAccessible, getPeople, hasPeople, hasPakeman, getPropabilities, getPakemans)
+module Zones.Model exposing (Zone, Biotope(..), Identity(..), getPeople, hasPeople, hasPakeman, getPropabilities, getPakemans)
 
-import Pakeman.Model exposing (Identity(..))
+import Pakeman.Model as Pakeman exposing (Identity(..))
 import People.Model exposing (People)
 
 
 type alias Zone = {
-        id: Int,
+        id: Identity,
         name: String,
         biotope: Biotope,
-        accessibleZones: List Int,
+        accessibleZones: List Identity,
         people: List People,
-        pakemanPresence: List (Float, Identity)
+        pakemanPresence: List (Float, Pakeman.Identity)
     }
 
 type Biotope 
@@ -21,10 +21,16 @@ type Biotope
     | Moutain
     | Cavern
 
-getPropabilities: Zone -> List (Float, Identity)
+type Identity
+    = NoZone
+    | BourgPoulette
+    | Road1
+
+
+getPropabilities: Zone -> List (Float, Pakeman.Identity)
 getPropabilities zone = zone.pakemanPresence
 
-getPakemans: Zone -> List Identity
+getPakemans: Zone -> List Pakeman.Identity
 getPakemans zone = List.map (\ (_, species) -> species) zone.pakemanPresence
 
 hasPakeman: Zone -> Bool
@@ -35,6 +41,3 @@ getPeople zone = zone.people
 
 hasPeople: Zone -> Bool
 hasPeople zone = not (List.isEmpty zone.people)
-
-isZoneAccessible: Zone -> Int -> Bool
-isZoneAccessible zone id = List.member id zone.accessibleZones

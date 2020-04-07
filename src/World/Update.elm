@@ -1,6 +1,5 @@
 module World.Update exposing (update)
 
-import Dict
 import Time
 
 import Message as Main exposing (Message(..))
@@ -17,11 +16,11 @@ update msgFor world =
 updateWorld: Message -> World -> World
 updateWorld msg world = 
     case msg of 
-        ChangeZone zoneId -> 
+        ChangeZone zone -> 
             { world |  
-                currentZone = case Dict.get zoneId world.zones of
-                    Just z -> z
-                    Nothing -> world.currentZone,
+                currentZone = if List.member zone world.zones
+                    then zone 
+                    else world.currentZone,
                 encounters = []
             }
         MakeEncounter encounter ->
