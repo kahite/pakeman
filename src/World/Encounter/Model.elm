@@ -3,12 +3,11 @@ module World.Encounter.Model exposing (Encounter, genEncounter, genTryEncounter)
 import Random 
 import Time
 
-import Pakeman.Model exposing (Identity(..))
 import World.Zones.Model as Zone
 
 
 type alias Encounter = {
-        pakemanId: Identity,
+        pakemanName: String,
         time: Time.Posix,
         duration: Int
     } 
@@ -21,16 +20,16 @@ genTryEncounter = Random.weighted (10, True) [(90, False)]
 genEncounter: Time.Posix -> Zone.Zone -> Random.Generator Encounter
 genEncounter time zone = 
     Random.map3 Encounter 
-        (genPakemanId (Zone.getPropabilities zone)) 
+        (genPakemanName (Zone.getPropabilities zone)) 
         (Random.constant time)
         (genDuration (List.map (\ (p, _) -> (p, round p)) (Zone.getPropabilities zone)))
 
-genPakemanId: List (Float, Identity) -> Random.Generator Identity
-genPakemanId list = Random.weighted 
+genPakemanName: List (Float, String) -> Random.Generator String
+genPakemanName list = Random.weighted 
     (
         case List.head list of  
             Just r -> r
-            Nothing -> (0, MissingNo)
+            Nothing -> (0, "MissingNo")
     ) (
         case List.tail list of
             Just l -> l

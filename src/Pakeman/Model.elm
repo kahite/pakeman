@@ -1,44 +1,15 @@
-module Pakeman.Model exposing (Pakeman, Identity(..), init)
+module Pakeman.Model exposing (Pakeman, init)
 
 import Pakeman.Type as Type exposing (Type(..))
 
 
 type alias Pakeman = {
-        identity: Identity,
         name: String,
+        number: Int,
         firstType: Type,
         secondType: Type
     }
 
 
 init: Pakeman
-init = Pakeman MissingNo "MissingNo" Type.Nothing Type.Nothing
-
-
-type Identity 
-    = MissingNo
-    | Bilbuzorre
-    | Herbuzorre
-    | Flaruzorre
-    | Solomiche
-    | Reptuncel
-    | Drocoifei
-    | Coropice
-    | Coroboffe
-    | Tartonk
-    | Chenupon
-    | Chrysoceur
-    | Populisuan
-    | Ospucat
-    | Cacanfart
-    | Dordoignon
-    | Raicaal
-    | Raicaips
-    | Raicornoge
-    | Rototo
-    | Rototoc
-    | Poufobac
-    | Reposdepac
-    | Oba
-    | Orbak
-    | Pukochi
+init = Pakeman "MissingNo" 0 Type.Nothing Type.Nothing

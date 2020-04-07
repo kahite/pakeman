@@ -1,6 +1,5 @@
 module World.Zones.Model exposing (Zone, Biotope(..), Identity(..), getPeople, hasPeople, hasPakeman, getPropabilities, getPakemans)
 
-import Pakeman.Model as Pakeman exposing (Identity(..))
 import People.Model exposing (People)
 
 
@@ -10,7 +9,7 @@ type alias Zone = {
         biotope: Biotope,
         accessibleZones: List Identity,
         people: List People,
-        pakemanPresence: List (Float, Pakeman.Identity)
+        pakemanPresence: List (Float, String)
     }
 
 type Biotope 
@@ -27,10 +26,10 @@ type Identity
     | Road1
 
 
-getPropabilities: Zone -> List (Float, Pakeman.Identity)
+getPropabilities: Zone -> List (Float, String)
 getPropabilities zone = zone.pakemanPresence
 
-getPakemans: Zone -> List Pakeman.Identity
+getPakemans: Zone -> List String
 getPakemans zone = List.map (\ (_, species) -> species) zone.pakemanPresence
 
 hasPakeman: Zone -> Bool

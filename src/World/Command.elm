@@ -36,7 +36,7 @@ cmdWorld msg world =
             then Random.generate (\ encounter -> MessageForWorld (MakeEncounter encounter)) (Encounter.genEncounter time world.currentZone)
             else Cmd.none
         MakeEncounter encounter ->
-                Pakedex.cmdAddSeenPakeman encounter.pakemanId
+                Pakedex.cmdAddSeenPakeman encounter.pakemanName
         TalkTo people -> 
             Cmd.batch [
                 Messenger.cmdAddComment people people.welcomeText,

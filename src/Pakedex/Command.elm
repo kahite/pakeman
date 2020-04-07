@@ -5,7 +5,6 @@ import Task
 import Message as Main exposing (Message(..))
 import Pakedex.Message exposing (Message(..))
 import Pakedex.Model exposing (Pakedex, getPakeman, hasSeenPakeman)
-import Pakeman.Model exposing (Identity(..))
 import Messenger.Command as Messenger
 
 
@@ -26,6 +25,6 @@ cmdMessenger msg pakedex =
             else Cmd.none
 
 
-cmdAddSeenPakeman: Identity -> Cmd Main.Message
-cmdAddSeenPakeman pakemanId =
-    Task.perform (\_ -> MessageForPakedex (AddSeenPakeman pakemanId))  (Task.succeed 1)
+cmdAddSeenPakeman: String -> Cmd Main.Message
+cmdAddSeenPakeman name =
+    Task.perform (\_ -> MessageForPakedex (AddSeenPakeman name))  (Task.succeed 1)

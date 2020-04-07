@@ -32,7 +32,7 @@ displayPakemanInSight world pakedex =
             List.map (\ encounter -> 
                 div [class "w-25"] [
                     Pakeman.displayCard 
-                        (Pakedex.getPakeman pakedex encounter.pakemanId)
+                        (Pakedex.getPakeman pakedex encounter.pakemanName)
                         True 
                         False
                 ]

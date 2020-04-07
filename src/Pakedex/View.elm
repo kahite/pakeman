@@ -1,5 +1,6 @@
 module Pakedex.View exposing (view)
 
+import Dict
 import Html exposing (Html, div, text)
 
 import Pakedex.Model exposing (Pakedex, hasSeenPakeman)
@@ -11,9 +12,9 @@ view pakedex =
         Html.h3 [] [text "Pakedex"],
         div [] (List.map (\ pakeman -> 
             div [] [
-                if hasSeenPakeman pakedex pakeman.identity
+                if hasSeenPakeman pakedex pakeman.name
                 then text pakeman.name
                 else text "-----"
             ]
-        ) pakedex.list)
+        ) (List.sortBy .number (Dict.values pakedex.pakemans)))
     ]
