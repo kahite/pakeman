@@ -23,5 +23,4 @@ getBgColor zone =
         City -> "bg-light-silver"
         Plain -> "bg-green"
         Forest -> "bg-dark-green"
-        Moutain -> "bg-light-blue"
         Cavern -> "bg-dark-gray"

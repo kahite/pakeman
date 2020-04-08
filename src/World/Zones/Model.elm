@@ -16,7 +16,6 @@ type Biotope
     | City
     | Plain
     | Forest
-    | Moutain
     | Cavern
 
 
