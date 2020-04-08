@@ -17,5 +17,5 @@ create = Zone
         (50, "Rototo"),
         (25, "Ospucat"), 
         (25, "Poufobac"), 
-        (25, "Oba")
+        (25, "Chenupan")
     ]

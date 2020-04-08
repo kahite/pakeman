@@ -29,6 +29,32 @@ import Pakeman.Data.P22_Reposdepac
 import Pakeman.Data.P23_Oba
 import Pakeman.Data.P24_Orbak
 import Pakeman.Data.P25_Pukochi
+import Pakeman.Data.P26_Rouchi
+import Pakeman.Data.P27_Sobelette
+import Pakeman.Data.P28_Soblouroi
+import Pakeman.Data.P29_Nudarone
+import Pakeman.Data.P30_Nudaruna
+import Pakeman.Data.P31_Nudaqueen
+import Pakeman.Data.P32_Nudaron
+import Pakeman.Data.P33_Nudaruno
+import Pakeman.Data.P34_Nudaking
+import Pakeman.Data.P35_Melafee
+import Pakeman.Data.P36_Meladelfe
+import Pakeman.Data.P37_Gaipax
+import Pakeman.Data.P38_Feinord
+import Pakeman.Data.P39_Randaidai
+import Pakeman.Data.P40_Gradaidai
+
+import Pakeman.Data.P63_Obro
+import Pakeman.Data.P64_Kodobro
+import Pakeman.Data.P65_Olokozom
+
+import Pakeman.Data.P95_Anux
+
+import Pakeman.Data.P122_MMeme
+
+import Pakeman.Data.P150_Mowtwo
+import Pakeman.Data.P151_Mow
 
 
 type alias Pakedex = {
@@ -79,7 +105,30 @@ init = Pakedex
         ("Reposdepac", Pakeman.Data.P22_Reposdepac.create),
         ("Oba", Pakeman.Data.P23_Oba.create),
         ("Orbak", Pakeman.Data.P24_Orbak.create),
-        ("Pukochi", Pakeman.Data.P25_Pukochi.create)
+        ("Pukochi", Pakeman.Data.P25_Pukochi.create),
+        ("Rouchi", Pakeman.Data.P26_Rouchi.create),
+        ("Sobelette", Pakeman.Data.P27_Sobelette.create),
+        ("Soblouroi", Pakeman.Data.P28_Soblouroi.create),
+        ("Nudarone", Pakeman.Data.P29_Nudarone.create),
+        ("Nudaruna", Pakeman.Data.P30_Nudaruna.create),
+        ("Nudaqueen", Pakeman.Data.P31_Nudaqueen.create),
+        ("Nudaron", Pakeman.Data.P32_Nudaron.create),
+        ("Nudaruno", Pakeman.Data.P33_Nudaruno.create),
+        ("Nudaking", Pakeman.Data.P34_Nudaking.create),
+        ("Melafee", Pakeman.Data.P35_Melafee.create),
+        ("Meladelfe", Pakeman.Data.P36_Meladelfe.create),
+        ("Gaipax", Pakeman.Data.P37_Gaipax.create),
+        ("Feinord", Pakeman.Data.P38_Feinord.create),
+        ("Randaidai", Pakeman.Data.P39_Randaidai.create),
+        ("Gradaidai", Pakeman.Data.P40_Gradaidai.create),
+
+        ("Obro", Pakeman.Data.P63_Obro.create),
+        ("Kodobro", Pakeman.Data.P64_Kodobro.create),
+        ("Olokozom", Pakeman.Data.P65_Olokozom.create),
+        ("Anux", Pakeman.Data.P95_Anux.create),
+        ("M. Meme", Pakeman.Data.P122_MMeme.create),
+        ("Mowtwo", Pakeman.Data.P150_Mowtwo.create),
+        ("Mow", Pakeman.Data.P151_Mow.create)
     ]) 
     Set.empty
     Set.empty
