@@ -1,13 +1,12 @@
-module World.Zones.Model exposing (Zone, Biotope(..), Identity(..), getPeople, hasPeople, hasPakeman, getPropabilities, getPakemans)
+module World.Zones.Model exposing (Zone, Biotope(..), getPeople, hasPeople, hasPakeman, getPropabilities, getPakemans)
 
 import People.Model exposing (People)
 
 
 type alias Zone = {
-        id: Identity,
         name: String,
         biotope: Biotope,
-        accessibleZones: List Identity,
+        accessibleZones: List String,
         people: List People,
         pakemanPresence: List (Float, String)
     }
@@ -19,11 +18,6 @@ type Biotope
     | Forest
     | Moutain
     | Cavern
-
-type Identity
-    = NoZone
-    | BourgPoulette
-    | Road1
 
 
 getPropabilities: Zone -> List (Float, String)

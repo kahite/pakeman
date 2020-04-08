@@ -86,8 +86,8 @@ displayAvailableZones world =
 getAccessibleZones: World -> List ZoneModel.Zone
 getAccessibleZones world = 
     List.filterMap
-    (\ identity -> 
-        List.head (List.filter (\ zone -> zone.id == identity) world.zones)
+    (\ name -> 
+        List.head (List.filter (\ zone -> zone.name == name) world.zones)
     )
     world.currentZone.accessibleZones
 

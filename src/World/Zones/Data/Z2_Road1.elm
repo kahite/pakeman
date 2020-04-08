@@ -1,15 +1,14 @@
 module World.Zones.Data.Z2_Road1 exposing (create)
 
-import World.Zones.Model exposing (Zone, Biotope(..), Identity(..))
+import World.Zones.Model exposing (Zone, Biotope(..))
  
 
 create: Zone
 create = Zone
-    Road1
     "Road 1"
     Plain
     [
-        BourgPoulette
+        "BourgPoulette"
     ]
     []
     [
