@@ -33,8 +33,15 @@ updateWorld msg world =
                 ) world.encounters    
             }
         MessageForZone msgFor ->
+            let currentZone = Zone.update msgFor world.currentZone
+            in
             { world |
-                currentZone = Zone.update msgFor world.currentZone
+                currentZone = currentZone,
+                zones = List.map (\ z -> 
+                    if z.name == currentZone.name
+                    then currentZone
+                    else z
+                ) world.zones
             }
         _ -> 
             world
